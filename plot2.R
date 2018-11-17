@@ -1,0 +1,10 @@
+Inputfile <- read.table("C:/Users/prasad.pande/Documents/household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?")
+InputfileSub <- subset(Inputfile, Date %in% c("1/2/2007","2/2/2007"))
+dim(InputfileSub)
+InputfileSub$Date <- as.Date(InputfileSub$Date, format = "%d/%m/%Y")
+InputfileSub$Datetime1 <- strptime(paste(InputfileSub$Date, InputfileSub$Time), "%Y-%m-%d %H:%M:%S")
+InputfileSub$Datetime1 <- as.POSIXct(InputfileSub$Datetime1)
+plot(InputfileSub$Global_active_power ~ InputfileSub$Datetime1, type="l", ylab = "Global Active Power(Kilowatt)",
+     xlab="")
+dev.copy(png, "plot2.png", height=480, width=480)
+dev.off()
